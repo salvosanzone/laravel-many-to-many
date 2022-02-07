@@ -28,7 +28,7 @@
               @forelse ($post->tags as $tag)
                 {{ $tag->name }}
               @empty
-                
+                -
               @endforelse
             </td>
             

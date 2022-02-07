@@ -44,7 +44,28 @@
             </div>
           @enderror
         </div>
-        <button type="submit" class="btn btn-info">Invia</button>
+        @foreach ($tags as $tag)
+        <div class="form-check">
+          <input type="checkbox" 
+            value="{{ $tag->id }}" 
+            name="tags[]" 
+            id="tag{{ $loop->iteration }}"
+
+            @if (!$errors->any() && $post->tags->contains($tag->id))
+              checked
+            @elseif ( $errors->any() && in_array($tag->id, old('tags', [])))
+              checked
+            @endif
+
+          >
+            
+          <label class="form-check-label" 
+            for="{{ $loop->iteration }}">
+            #{{ $tag->name }}
+          </label>
+        </div>
+        @endforeach
+        <button type="submit" class="btn btn-info mt-3">Invia</button>
       </form>
     </div>
   </div>

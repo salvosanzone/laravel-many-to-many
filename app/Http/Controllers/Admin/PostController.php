@@ -98,9 +98,10 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
+        $tags = Tag::all();
 
         if ($post) {
-            return view('admin.posts.edit', compact('post'));
+            return view('admin.posts.edit', compact('post', 'tags'));
         }
         abort(404, 'Post non presente nel database');
     }
@@ -125,6 +126,13 @@ class PostController extends Controller
         }
 
         $post->save();
+
+        if (array_key_exists('tags', $form_data['tags'])) {
+            $post->tags()->sync($form_data['tags']);
+        }else {
+            // se non viene inviato nessun tag devo cancellare tutte le relazioni
+            $post->tags()->detach();
+        }
 
         return redirect()->route('admin.posts.show', $post);
 
