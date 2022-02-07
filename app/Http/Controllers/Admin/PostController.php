@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 
 // devo importare il model se voglio poi creare le query
 use App\Post;
+use App\Tag;
 
 class PostController extends Controller
 {
@@ -33,7 +34,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $tags = Tag::all();
+        return view('admin.posts.create', compact('tags'));
     }
 
     /**
@@ -57,6 +59,13 @@ class PostController extends Controller
         $new_post->content = $data['content'];
         $new_post->slug = Post::generateSlug($new_post->title);
         $new_post->save();
+
+        // verificare l'esistenza dell'array (che dentro $data è una chiave) tags dentro l'array $data
+        if(array_key_exists('tags', $data)){
+
+            //se esiste allora eseguo l'attach
+            $new_post->tags()->attach($data('tags'));
+        }
 
         return redirect()->route('admin.posts.show', $new_post);
 
