@@ -13,6 +13,7 @@
         <tr>
           <th scope="col">ID</th>
           <th scope="col">Title</th>
+          <th scope="col">Tag</th>
           <th scope="col"colspan="4">Category</th>
         </tr>
       </thead>
@@ -22,6 +23,14 @@
           <tr>
             <th scope="row">{{ $post->id }}</th>
             <td>{{ $post->title }}</td>
+
+            <td>
+              @forelse ($post->tags as $tag)
+                {{ $tag->name }}
+              @empty
+                
+              @endforelse
+            </td>
             
             {{-- se esiste lo stampo altrimenti metto un trattino --}}
             @if ($post->category->name)

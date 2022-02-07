@@ -11,11 +11,18 @@ class Post extends Model
 {
 
 
+    public function tags(){
+        return $this->belongsToMany('App\Tag');
+    }
+
+
+
     public function category(){
 
         // alll'oggetto post appartine una sola category
         return $this->belongsTo('App\Category');
     }
+
 
 
 
