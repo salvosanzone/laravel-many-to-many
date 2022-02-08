@@ -10,6 +10,14 @@
           <h6>{{ $post->title }}</h6>
           <h4 class="card-subtitle mt-4">Contenuto</h4>
           <p class="card-text">{{ $post->content }}</p>
+          <h4 class="mb-0">Category</h4>
+          <p class="mb-3">
+            @if ($post->category)
+              {{ $post->category->name }}
+            @else
+              -
+            @endif
+          </p>
           <h4 class="mb-0">Tag</h4>
           <p class="mb-3">
             @forelse ($post->tags as $tag)
